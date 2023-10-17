@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="songs" type="id" />
+    <item name="relativeLayout" type="id" />
+    <item name="artists" type="id" />
+</resources>
