@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import SongAdapter
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
+import android.view.View
 import android.widget.TextView
 import songs
 import java.io.IOException
@@ -23,25 +26,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var songTitle: TextView
     private lateinit var artistName: TextView
 
+    private lateinit var nowPlayingBar: View
+
+    private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mediaPlayer = MediaPlayer()
+        if (MediaPlayerSingleton.mediaPlayer == null) {
+            MediaPlayerSingleton.mediaPlayer = MediaPlayer()
+        }
+
+        sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+
+        mediaPlayer = MediaPlayerSingleton.mediaPlayer!!
 
         val btnSongs = findViewById<Button>(R.id.songs)
-        val btnPlaylists = findViewById<Button>(R.id.artists)
+        val btnNotification = findViewById<Button>(R.id.notification)
 
         // Mặc định nút Songs sẽ sáng từ đầu
         btnSongs.setBackgroundColor(Color.parseColor("#6750A4"))
-        btnPlaylists.setBackgroundColor(Color.GRAY)
+        btnNotification.setBackgroundColor(Color.GRAY)
 
         btnSongs.setOnClickListener {
             it.setBackgroundColor(Color.parseColor("#6750A4"))
-            btnPlaylists.setBackgroundColor(Color.GRAY)
+            btnNotification.setBackgroundColor(Color.GRAY)
         }
 
-        btnPlaylists.setOnClickListener {
+        btnNotification.setOnClickListener {
             it.setBackgroundColor(Color.parseColor("#6750A4"))
             btnSongs.setBackgroundColor(Color.GRAY)
         }
@@ -61,18 +74,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Initialize the playButton variable here
-        playButton = findViewById(R.id.play_button)
+            playButton = findViewById(R.id.play_button)
 
         playButton.setOnClickListener {
+            val editor = sharedPreferences.edit()
             if (isPlaying) {
                 mediaPlayer.pause()
                 playButton.text = "\u25B6" // Unicode character for "Play"
+                editor.putBoolean("isPlaying", false)
             } else {
                 mediaPlayer.start()
                 playButton.text = "\u23F8" // Unicode character for "Pause"
+                editor.putBoolean("isPlaying", true)
             }
+            editor.apply()
             isPlaying = !isPlaying
         }
+
+        nowPlayingBar = findViewById<View>(R.id.now_playing_bar)
+        nowPlayingBar.setOnClickListener {
+            val intent = Intent(this, SongControlActivity::class.java)
+            intent.putExtra("songTitle", songTitle.text.toString())
+            intent.putExtra("artistName", artistName.text.toString())
+            startActivity(intent)
+        }
+
+        nowPlayingBar.visibility = View.GONE
     }
 
     private fun playSong(songId: Int) {
@@ -91,9 +118,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateNowPlayingBar(song: Song) {
+        nowPlayingBar.visibility = View.VISIBLE
         songTitle.text = song.title
         artistName.text = song.artist
         playButton.text = "\u23F8" // Unicode character for "Pause"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isPlaying = sharedPreferences.getBoolean("isPlaying", false)
+        playButton.text = if (isPlaying) "\u23F8" else "\u25B6"
     }
 
     override fun onDestroy() {
