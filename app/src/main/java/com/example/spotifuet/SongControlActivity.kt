@@ -21,12 +21,6 @@ class SongControlActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.song_control)
 
-        if (MediaPlayerSingleton.mediaPlayer == null) {
-            Toast.makeText(this, "MediaPlayer is not initialized", Toast.LENGTH_SHORT).show()
-        } else {
-            // Your existing code here...
-        }
-
         playButton = findViewById(R.id.play_button)
 
         sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
