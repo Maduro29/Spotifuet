@@ -9,12 +9,15 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="410dp"
+        android:layout_height="52dp"
+        android:background="#09A567"
+        android:padding="10dp"
         android:text="Spotify"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,26 +28,26 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="80dp"
         android:text="Songs"
+        android:backgroundTint="#09A567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/notification"
+        android:id="@+id/artists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="80dp"
-        android:text="Notification"
+        android:text="Artists"
         app:layout_constraintStart_toEndOf="@+id/songs"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <Button
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         android:text="Search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -53,8 +56,8 @@
         android:id="@+id/playlists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="4dp"
         android:text="Playlists"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -63,6 +66,14 @@
         layout="@layout/songs"
         app:layout_constraintBottom_toBottomOf="@+id/songs"
         app:layout_constraintEnd_toStartOf="@+id/songs" />
+
+    <include
+        layout="@layout/search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         android:id="@+id/now_playing_bar"

@@ -45,19 +45,26 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayerSingleton.mediaPlayer!!
 
         val btnSongs = findViewById<Button>(R.id.songs)
-        val btnNotification = findViewById<Button>(R.id.notification)
+        val btnArtists = findViewById<Button>(R.id.artists)
+        val btnSearch = findViewById<Button>(R.id.search)
+        val btnPlaylists = findViewById<Button>(R.id.playlists)
+        val btnSearchConfirm = findViewById<Button>(R.id.search_button)
 
         // Mặc định nút Songs sẽ sáng từ đầu
-        btnSongs.setBackgroundColor(Color.parseColor("#6750A4"))
-        btnNotification.setBackgroundColor(Color.GRAY)
+        btnSearch.setBackgroundColor(Color.parseColor("#09A567"))
+        btnPlaylists.setBackgroundColor(Color.parseColor("#09A567"))
+        btnSongs.setBackgroundColor(Color.parseColor("#09A567"))
+        btnArtists.setBackgroundColor(Color.GRAY)
+        btnSongs.setBackgroundColor(Color.parseColor("#09A567"))
+        btnSearchConfirm.setBackgroundColor(Color.parseColor("#09A567"))
 
         btnSongs.setOnClickListener {
-            it.setBackgroundColor(Color.parseColor("#6750A4"))
-            btnNotification.setBackgroundColor(Color.GRAY)
+            it.setBackgroundColor(Color.parseColor("#09A567"))
+            btnArtists.setBackgroundColor(Color.GRAY)
         }
 
-        btnNotification.setOnClickListener {
-            it.setBackgroundColor(Color.parseColor("#6750A4"))
+        btnArtists.setOnClickListener {
+            it.setBackgroundColor(Color.parseColor("#09A567"))
             btnSongs.setBackgroundColor(Color.GRAY)
         }
 
